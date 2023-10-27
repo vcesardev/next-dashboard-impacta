@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 import HeaderText from "../components/HeaderText";
 import BaseOptionButton from "../components/BaseOptionButton";
+import { postLogin } from "../../services/Auth";
+import { authRepository } from "../../repositories/auth.repository";
 
 const Login: React.FC = () => {
   const router = useRouter();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const login = (): void => {
-    router.replace("/home");
+  const signIn = async (): Promise<void> => {
+    try {
+      const response = await postLogin({ username, password });
+      authRepository.setLoggedUser(response.data);
+      router.replace("/home");
+    } catch (err: any) {
+      console.log(err);
+      if (err.response.status === 401) {
+        alert("Login e/ou senha incorretos!");
+      }
+    }
   };
 
   return (
@@ -32,9 +45,23 @@ const Login: React.FC = () => {
         gap={5}
       >
         <HeaderText>Login</HeaderText>
-        <Input placeholder="E-mail" size="md" type="email" w={"60%"} />
-        <Input placeholder="senha" size="md" type="password" w={"60%"} />
-        <BaseOptionButton pt={"6"} pb="6" onClick={login}>
+        <Input
+          placeholder="E-mail"
+          size="md"
+          type="email"
+          w={"60%"}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Input
+          placeholder="senha"
+          size="md"
+          type="password"
+          w={"60%"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <BaseOptionButton pt={"6"} pb="6" onClick={signIn}>
           Entrar
         </BaseOptionButton>
       </Flex>

@@ -7,7 +7,7 @@ type Props = {
 
 const HeaderText: React.FC<Props> = ({ children }) => {
   return (
-    <Text fontSize={"3xl"} textAlign={"center"} w={"100%"}>
+    <Text fontSize={"3xl"} textAlign={"center"} w={"100%"} mb={"4"}>
       {children}
     </Text>
   );

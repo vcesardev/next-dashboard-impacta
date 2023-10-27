@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 import HeaderText from "../components/HeaderText";
 import BaseOptionButton from "../components/BaseOptionButton";
 
+import { BaseUser } from "../../models/User";
+
+import { authRepository } from "../../repositories/auth.repository";
+
 const Home: React.FC = () => {
   const router = useRouter();
+  const [user, setUser] = useState<BaseUser>({} as BaseUser);
+
+  const getUserData = async (): Promise<void> => {
+    try {
+      const data: BaseUser | undefined = authRepository.getLoggedUser();
+      if (data) {
+        setUser(data);
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const navigateUsers = (): void => {
     router.push("/users");
@@ -17,6 +37,7 @@ const Home: React.FC = () => {
   };
 
   const logout = (): void => {
+    authRepository.removeLoggedUser();
     router.replace("/login");
   };
 
@@ -39,7 +60,7 @@ const Home: React.FC = () => {
         direction={"column"}
         gap={5}
       >
-        <HeaderText>Bem vindo!</HeaderText>
+        <HeaderText>{`${user.name?.split(" ")[0]}, Bem vindo!`}</HeaderText>
 
         <Flex w={"80%"} align={"center"} justify={"space-between"}>
           <BaseOptionButton onClick={navigateUsers}>Usuários</BaseOptionButton>
