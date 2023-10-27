@@ -1,7 +1,17 @@
 import React from "react";
-import { Flex, Text, Input, Button } from "@chakra-ui/react";
+import { Flex, Input } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
+import HeaderText from "../components/HeaderText";
+import BaseOptionButton from "../components/BaseOptionButton";
 
 const Login: React.FC = () => {
+  const router = useRouter();
+
+  const login = (): void => {
+    router.replace("/home");
+  };
+
   return (
     <Flex
       flexDirection={"column"}
@@ -21,19 +31,12 @@ const Login: React.FC = () => {
         direction={"column"}
         gap={5}
       >
-        <Text fontSize={"3xl"}>Login</Text>
+        <HeaderText>Login</HeaderText>
         <Input placeholder="E-mail" size="md" type="email" w={"60%"} />
         <Input placeholder="senha" size="md" type="password" w={"60%"} />
-        <Button
-          bg={"blue.400"}
-          size="sm"
-          color={"white"}
-          pt={"6"}
-          pb={"6"}
-          w={"20%"}
-        >
-          Login
-        </Button>
+        <BaseOptionButton pt={"6"} pb="6" onClick={login}>
+          Entrar
+        </BaseOptionButton>
       </Flex>
     </Flex>
   );

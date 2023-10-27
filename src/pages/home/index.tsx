@@ -1,7 +1,25 @@
 import React from "react";
-import { Flex, Text, Input, Button } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
+import HeaderText from "../components/HeaderText";
+import BaseOptionButton from "../components/BaseOptionButton";
 
 const Home: React.FC = () => {
+  const router = useRouter();
+
+  const navigateUsers = (): void => {
+    router.push("/users");
+  };
+
+  const navigateRoles = (): void => {
+    router.push("/roles");
+  };
+
+  const logout = (): void => {
+    router.replace("/login");
+  };
+
   return (
     <Flex
       flexDirection={"column"}
@@ -21,41 +39,14 @@ const Home: React.FC = () => {
         direction={"column"}
         gap={5}
       >
-        <Text fontSize={"3xl"}>Usuários Cadastrados</Text>
+        <HeaderText>Bem vindo!</HeaderText>
 
         <Flex w={"80%"} align={"center"} justify={"space-between"}>
-          <Button
-            bg={"blue.400"}
-            size="sm"
-            color={"white"}
-            pt={"4"}
-            pb={"4"}
-            w={"30%"}
-          >
-            Roles
-          </Button>
+          <BaseOptionButton onClick={navigateUsers}>Usuários</BaseOptionButton>
 
-          <Button
-            bg={"blue.400"}
-            size="sm"
-            color={"white"}
-            pt={"4"}
-            pb={"4"}
-            w={"30%"}
-          >
-            Novo Usuário
-          </Button>
+          <BaseOptionButton onClick={navigateRoles}>Roles</BaseOptionButton>
 
-          <Button
-            bg={"blue.400"}
-            size="sm"
-            color={"white"}
-            pt={"4"}
-            pb={"4"}
-            w={"30%"}
-          >
-            Sair
-          </Button>
+          <BaseOptionButton onClick={logout}>Sair</BaseOptionButton>
         </Flex>
       </Flex>
     </Flex>

@@ -1,7 +1,9 @@
 import React from "react";
-import { Flex, Text, Box, Button, Input } from "@chakra-ui/react";
-
+import { Flex, Button, Input } from "@chakra-ui/react";
 import { LiaUserEditSolid } from "react-icons/lia";
+
+import HeaderText from "../../components/HeaderText";
+import BaseOptionButton from "../../components/BaseOptionButton";
 
 const Home: React.FC = () => {
   return (
@@ -25,7 +27,7 @@ const Home: React.FC = () => {
         pb={"4"}
         gap={5}
       >
-        <Text fontSize={"3xl"}>Editar Role</Text>
+        <HeaderText>Editar Role</HeaderText>
 
         <Input placeholder="Nome" size="sm" w={"60%"} borderRadius={"md"} />
         <Input
@@ -35,9 +37,9 @@ const Home: React.FC = () => {
           borderRadius={"md"}
         />
 
-        <Button leftIcon={<LiaUserEditSolid />} mt={"4"} w={"30%"}>
+        <BaseOptionButton leftIcon={<LiaUserEditSolid />} mt={"4"} w={"30%"}>
           Editar
-        </Button>
+        </BaseOptionButton>
 
         <Button w={"30%"}>Cancelar</Button>
       </Flex>

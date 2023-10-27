@@ -2,6 +2,7 @@ import React from "react";
 import { Flex, Text, Box, Button, Input } from "@chakra-ui/react";
 
 import { LiaUserEditSolid } from "react-icons/lia";
+import HeaderText from "../../components/HeaderText";
 
 const Home: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const Home: React.FC = () => {
         pb={"4"}
         gap={5}
       >
-        <Text fontSize={"3xl"}>Editar usuário</Text>
+        <HeaderText>Editar usuário</HeaderText>
 
         <Input placeholder="Nome" size="sm" w={"60%"} borderRadius={"md"} />
         <Input

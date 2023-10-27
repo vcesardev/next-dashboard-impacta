@@ -1,5 +1,6 @@
 import React from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
+import HeaderText from "../../../components/HeaderText";
 
 const UsersHeader: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const UsersHeader: React.FC = () => {
     </Button> */}
         </Box>
 
-        <Text fontSize={"3xl"}>Usuários</Text>
+        <HeaderText>Usuários cadastrados</HeaderText>
 
         <Box w={"30%"} />
       </Flex>

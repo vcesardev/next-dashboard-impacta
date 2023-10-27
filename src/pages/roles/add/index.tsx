@@ -1,7 +1,9 @@
 import React from "react";
-import { Flex, Text, Box, Button, Input } from "@chakra-ui/react";
+import { Flex, Button, Input } from "@chakra-ui/react";
 
 import { AiOutlineUserAdd } from "react-icons/ai";
+import HeaderText from "../../components/HeaderText";
+import BaseOptionButton from "../../components/BaseOptionButton";
 
 const Home: React.FC = () => {
   return (
@@ -25,7 +27,7 @@ const Home: React.FC = () => {
         pb={"4"}
         gap={5}
       >
-        <Text fontSize={"3xl"}>Nova Role</Text>
+        <HeaderText>Adicionar role</HeaderText>
 
         <Input placeholder="Nome" size="sm" w={"60%"} borderRadius={"md"} />
         <Input
@@ -35,11 +37,11 @@ const Home: React.FC = () => {
           borderRadius={"md"}
         />
 
-        <Button leftIcon={<AiOutlineUserAdd />} mt={"4"} w={"30%"}>
+        <BaseOptionButton leftIcon={<AiOutlineUserAdd />} mt={"4"} w={"30%"}>
           Cadastrar
-        </Button>
+        </BaseOptionButton>
 
-        <Button w={"30%"}>Cancelar</Button>
+        <BaseOptionButton w={"30%"}>Cancelar</BaseOptionButton>
       </Flex>
     </Flex>
   );
