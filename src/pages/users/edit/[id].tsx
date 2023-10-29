@@ -6,11 +6,12 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import HeaderText from "../../components/HeaderText";
 
 import { BaseRole } from "../../../models/Roles";
-import { authRepository } from "../../../repositories/auth.repository";
+
 import { getRoles } from "../../../services/Roles";
 import { UserEditPayload } from "../../../models/User";
 import { editUser, getUser } from "../../../services/User";
 import { useParams } from "next/navigation";
+import { logoutUser } from "../../../services/Auth";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const { id }: string = params;
+  const { id } = params;
 
   const fetchRoles = async (): Promise<void> => {
     try {
@@ -32,8 +33,7 @@ const Home: React.FC = () => {
       setRoles(response.data);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        alert("Sua sessão expirou, faça login novamente.");
-        authRepository.removeLoggedUser();
+        logoutUser();
         router.replace("/login");
       }
     }
@@ -48,7 +48,6 @@ const Home: React.FC = () => {
   };
 
   const handleEditUser = async (data: UserEditPayload): Promise<void> => {
-    console.log("data", data);
     try {
       for (const item of Object.values(data)) {
         if (item.length < 1) {
@@ -74,11 +73,10 @@ const Home: React.FC = () => {
 
       alert("Usuário editado com sucesso.");
 
-      router.replace("/home");
+      router.replace("/users");
     } catch (e: any) {
       if (e.response?.status === 401) {
-        alert("Sessão expirada, faça login novamente.");
-        authRepository.removeLoggedUser();
+        logoutUser();
         router.replace("/login");
       } else {
         alert(e.message);
@@ -96,8 +94,11 @@ const Home: React.FC = () => {
         setUsername(response.data.username);
         setSelectedRole(response.data.roles);
       }
-    } catch (e) {
-      alert(e);
+    } catch (err: any) {
+      if (err.response.status === 401) {
+        logoutUser();
+        router.replace("/login");
+      }
     }
   };
 
@@ -191,7 +192,9 @@ const Home: React.FC = () => {
           Editar
         </Button>
 
-        <Button w={"30%"}>Cancelar</Button>
+        <Button w={"30%"} onClick={() => router.replace("/users")}>
+          Cancelar
+        </Button>
       </Flex>
     </Flex>
   );

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { APIResponse } from "../models/Request";
 import { BaseUser, UserCreatePayload, UserEditPayload } from "../models/User";
 import { authRepository } from "../repositories/auth.repository";
@@ -17,6 +18,11 @@ const getHeaders = (): any => {
   return headers;
 };
 
+export const logoutUser = (): void => {
+  alert("Sessão expirada, faça login novamente.");
+  authRepository.removeLoggedUser();
+};
+
 export const getUsers = (): Promise<APIResponse<BaseUser[]>> =>
   get({
     url: "/users",
@@ -29,7 +35,7 @@ export const getUser = (userId: string): Promise<APIResponse<BaseUser>> =>
     headers: getHeaders(),
   });
 
-export const addUser = (
+export const postUser = (
   data: UserCreatePayload
 ): Promise<APIResponse<BaseUser>> =>
   post({ url: "/users", headers: getHeaders(), data });

@@ -49,6 +49,10 @@ const Home: React.FC = () => {
     router.push(`/users/edit/${data.id}`);
   };
 
+  const handleAddNewUser = (): void => {
+    router.push("/users/add");
+  };
+
   return (
     <Flex
       flexDirection={"column"}
@@ -68,7 +72,7 @@ const Home: React.FC = () => {
         direction={"column"}
         gap={5}
       >
-        <UsersHeader />
+        <UsersHeader addNewUser={handleAddNewUser} />
         {users?.map((user) => (
           <UserItem
             data={user}

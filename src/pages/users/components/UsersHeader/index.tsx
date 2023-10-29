@@ -1,8 +1,13 @@
 import React from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import HeaderText from "../../../components/HeaderText";
+import BaseOptionButton from "../../../components/BaseOptionButton";
 
-const UsersHeader: React.FC = () => {
+type Props = {
+  addNewUser: () => void;
+};
+
+const UsersHeader: React.FC<Props> = ({ addNewUser }) => {
   return (
     <>
       <Flex w={"80%"} align={"center"} justify={"space-between"}>
@@ -14,7 +19,11 @@ const UsersHeader: React.FC = () => {
 
         <HeaderText>Usuários cadastrados</HeaderText>
 
-        <Box w={"30%"} />
+        <Box w={"30%"}>
+          <BaseOptionButton onClick={addNewUser} w={"100%"}>
+            Adicionar Usuário
+          </BaseOptionButton>
+        </Box>
       </Flex>
       <Flex w={"100%"} align={"center"} justify={"space-between"}>
         <Text w={"25%"} textAlign={"center"}>

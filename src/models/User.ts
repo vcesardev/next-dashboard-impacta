@@ -16,6 +16,7 @@ export type UserCreatePayload = {
   username: string;
   roles: string;
   password: string;
+  confirmPassword?: string;
 };
 
 export type UserEditPayload = {
