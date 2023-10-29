@@ -18,7 +18,6 @@ const Login: React.FC = () => {
       authRepository.setLoggedUser(response.data);
       router.replace("/home");
     } catch (err: any) {
-      console.log(err);
       if (err.response.status === 401) {
         alert("Login e/ou senha incorretos!");
       }
@@ -54,7 +53,7 @@ const Login: React.FC = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
-          placeholder="senha"
+          placeholder="Senha"
           size="md"
           type="password"
           w={"60%"}

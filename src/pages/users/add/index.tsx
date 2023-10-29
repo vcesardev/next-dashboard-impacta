@@ -1,10 +1,18 @@
 import React from "react";
-import { Flex, Text, Box, Button, Input } from "@chakra-ui/react";
+import { Flex, Button, Input, Select } from "@chakra-ui/react";
 
 import { AiOutlineUserAdd } from "react-icons/ai";
 import HeaderText from "../../components/HeaderText";
 
 const Home: React.FC = () => {
+  const loadRoles = async (): Promise<void> => {
+    try {
+      console.log("load roles");
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
   return (
     <Flex
       flexDirection={"column"}
@@ -35,6 +43,11 @@ const Home: React.FC = () => {
           w={"60%"}
           borderRadius={"md"}
         />
+        <Select placeholder="Selecione uma role">
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </Select>
         <Input placeholder="Senha" size="sm" w={"60%"} borderRadius={"md"} />
         <Input
           placeholder="Confirme a senha"

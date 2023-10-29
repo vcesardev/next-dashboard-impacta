@@ -1,7 +1,7 @@
 import { APIResponse } from "../models/Request";
-import { BaseUser } from "../models/User";
+import { BaseUser, UserCreatePayload, UserEditPayload } from "../models/User";
 import { authRepository } from "../repositories/auth.repository";
-import { get } from "./api";
+import { get, post, put, del } from "./api";
 
 const getHeaders = (): any => {
   const user = authRepository.getLoggedUser();
@@ -17,9 +17,28 @@ const getHeaders = (): any => {
   return headers;
 };
 
-export const getUsers = (): Promise<APIResponse<BaseUser[]>> => {
-  return get({
+export const getUsers = (): Promise<APIResponse<BaseUser[]>> =>
+  get({
     url: "/users",
     headers: getHeaders(),
   });
-};
+
+export const getUser = (userId: string): Promise<APIResponse<BaseUser>> =>
+  get({
+    url: `/users/${userId}`,
+    headers: getHeaders(),
+  });
+
+export const addUser = (
+  data: UserCreatePayload
+): Promise<APIResponse<BaseUser>> =>
+  post({ url: "/users", headers: getHeaders(), data });
+
+export const editUser = (
+  data: UserEditPayload,
+  userId: string
+): Promise<APIResponse<BaseUser>> =>
+  put({ url: `/users/${userId}`, headers: getHeaders(), data });
+
+export const deleteUser = (userId: string): Promise<APIResponse<boolean>> =>
+  del({ url: `/users/${userId}`, headers: getHeaders() });

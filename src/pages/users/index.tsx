@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
 import UsersHeader from "./components/UsersHeader";
 import UserItem from "./components/UserItem";
+
 import { BaseUser } from "../../models/User";
-import { getUsers } from "../../services/User";
-import { useRouter } from "next/router";
+
+import { deleteUser, getUsers } from "../../services/User";
+
+import { authRepository } from "../../repositories/auth.repository";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -15,8 +20,9 @@ const Home: React.FC = () => {
       const response = await getUsers();
       setUsers(response.data);
     } catch (err: any) {
-      if (err.response.status === 401) {
+      if (err.response?.status === 401) {
         alert("Sua sessão expirou, faça login novamente.");
+        authRepository.removeLoggedUser();
         router.replace("/login");
       }
     }
@@ -24,16 +30,23 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO HANDLE USER DELETE
-  const handleDelete = (data: BaseUser) => {
-    console.log("delete", data);
+  const handleDelete = async (data: BaseUser) => {
+    try {
+      await deleteUser(data.id.toString());
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        alert("Sessão Expirada, faça login novamente!");
+        authRepository.removeLoggedUser();
+        router.replace("/login");
+      }
+    }
   };
 
-  // TODO HANDLE USER EDIT
-  const handleEdit = (data: BaseUser) => {
-    console.log("delete", data);
+  const handleEdit = async (data: BaseUser): Promise<void> => {
+    router.push(`/users/edit/${data.id}`);
   };
 
   return (

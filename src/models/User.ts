@@ -10,3 +10,18 @@ export type BaseUser = {
   roles: string;
   token: string;
 };
+
+export type UserCreatePayload = {
+  name: string;
+  username: string;
+  roles: string;
+  password: string;
+};
+
+export type UserEditPayload = {
+  name?: string;
+  username?: string;
+  roles?: string;
+  password?: string;
+  confirmPassword?: string;
+};
