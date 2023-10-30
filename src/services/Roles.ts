@@ -9,7 +9,7 @@ const getHeaders = (): any => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  console.log(user.token);
+
   const headers = {
     Authorization: `Bearer ${user?.token}`,
     "Content-Type": "application/json",

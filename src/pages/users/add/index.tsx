@@ -6,12 +6,10 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import HeaderText from "../../components/HeaderText";
 
 import { BaseRole } from "../../../models/Roles";
+import { UserCreatePayload } from "../../../models/User";
 
 import { getRoles } from "../../../services/Roles";
-import { UserCreatePayload } from "../../../models/User";
-import { postUser } from "../../../services/User";
-
-import { logoutUser } from "../../../services/Auth";
+import { postUser, userLogout } from "../../../services/User";
 
 const AddUser: React.FC = () => {
   const router = useRouter();
@@ -30,7 +28,7 @@ const AddUser: React.FC = () => {
       setRoles(response.data);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        logoutUser();
+        userLogout();
         router.replace("/login");
       }
     }
@@ -75,7 +73,7 @@ const AddUser: React.FC = () => {
       router.replace("/users");
     } catch (e: any) {
       if (e.response?.status === 401) {
-        logoutUser();
+        userLogout();
         router.replace("/login");
       } else {
         alert(e.message);

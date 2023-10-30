@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Text, Box, Button } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
 import RolesHeader from "./components/RolesHeader";
 import RoleItem from "./components/RoleItem";
-import { useRouter } from "next/router";
+
 import { BaseRole } from "../../models/Roles";
-import { authRepository } from "../../repositories/auth.repository";
+
 import { deleteRole, getRoles } from "../../services/Roles";
+import { userLogout } from "../../services/User";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -18,8 +21,7 @@ const Home: React.FC = () => {
       setRoles(response.data);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        alert("Sessão Expirada, faça login novamente!");
-        authRepository.removeLoggedUser();
+        userLogout();
         router.replace("/login");
       }
     }
@@ -44,8 +46,7 @@ const Home: React.FC = () => {
       await loadRoles();
     } catch (err: any) {
       if (err.response?.status === 401) {
-        alert("Sessão Expirada, faça login novamente!");
-        authRepository.removeLoggedUser();
+        userLogout();
         router.replace("/login");
       }
     }

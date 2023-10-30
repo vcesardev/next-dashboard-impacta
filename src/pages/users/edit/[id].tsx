@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Flex, Select, Button, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { LiaUserEditSolid } from "react-icons/lia";
+import { useParams } from "next/navigation";
 
 import HeaderText from "../../components/HeaderText";
 
 import { BaseRole } from "../../../models/Roles";
+import { UserEditPayload } from "../../../models/User";
 
 import { getRoles } from "../../../services/Roles";
-import { UserEditPayload } from "../../../models/User";
-import { editUser, getUser } from "../../../services/User";
-import { useParams } from "next/navigation";
-import { logoutUser } from "../../../services/Auth";
+import { editUser, getUser, userLogout } from "../../../services/User";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -33,7 +32,7 @@ const Home: React.FC = () => {
       setRoles(response.data);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        logoutUser();
+        userLogout();
         router.replace("/login");
       }
     }
@@ -76,7 +75,7 @@ const Home: React.FC = () => {
       router.replace("/users");
     } catch (e: any) {
       if (e.response?.status === 401) {
-        logoutUser();
+        userLogout();
         router.replace("/login");
       } else {
         alert(e.message);
@@ -87,7 +86,6 @@ const Home: React.FC = () => {
   const loadUserData = async (): Promise<void> => {
     try {
       const response = await getUser(id);
-      console.log(response.data);
 
       if (response) {
         setName(response.data.name);
@@ -96,7 +94,7 @@ const Home: React.FC = () => {
       }
     } catch (err: any) {
       if (err.response.status === 401) {
-        logoutUser();
+        userLogout();
         router.replace("/login");
       }
     }

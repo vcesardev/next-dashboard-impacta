@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Flex, Button, Input } from "@chakra-ui/react";
 import { LiaUserEditSolid } from "react-icons/lia";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 import HeaderText from "../../components/HeaderText";
 import BaseOptionButton from "../../components/BaseOptionButton";
-import { useRouter } from "next/router";
+
 import { editRole, getRole } from "../../../services/Roles";
-import { useParams } from "next/navigation";
 import { userLogout } from "../../../services/User";
+
 import { RoleEditPayload } from "../../../models/Roles";
 
 const Home: React.FC = () => {

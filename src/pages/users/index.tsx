@@ -7,9 +7,7 @@ import UserItem from "./components/UserItem";
 
 import { BaseUser } from "../../models/User";
 
-import { deleteUser, getUsers } from "../../services/User";
-
-import { authRepository } from "../../repositories/auth.repository";
+import { deleteUser, getUsers, userLogout } from "../../services/User";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -21,8 +19,7 @@ const Home: React.FC = () => {
       setUsers(response.data);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        alert("Sua sessão expirou, faça login novamente.");
-        authRepository.removeLoggedUser();
+        userLogout();
         router.replace("/login");
       }
     }
@@ -38,8 +35,7 @@ const Home: React.FC = () => {
       await deleteUser(data.id.toString());
     } catch (err: any) {
       if (err.response?.status === 401) {
-        alert("Sessão Expirada, faça login novamente!");
-        authRepository.removeLoggedUser();
+        userLogout();
         router.replace("/login");
       }
     }

@@ -1,8 +1,8 @@
 import React from "react";
 import { Flex, Text, Button } from "@chakra-ui/react";
-
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlinePersonRemoveAlt1 } from "react-icons/md";
+
 import { BaseRole } from "../../../../models/Roles";
 
 type Props = {
