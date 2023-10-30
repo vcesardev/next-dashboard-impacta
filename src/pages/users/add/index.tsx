@@ -74,7 +74,6 @@ const AddUser: React.FC = () => {
 
       router.replace("/users");
     } catch (e: any) {
-      console.log(e.response);
       if (e.response?.status === 401) {
         logoutUser();
         router.replace("/login");

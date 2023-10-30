@@ -6,6 +6,7 @@ import HeaderText from "../components/HeaderText";
 import BaseOptionButton from "../components/BaseOptionButton";
 import { postLogin } from "../../services/Auth";
 import { authRepository } from "../../repositories/auth.repository";
+import { BaseUser } from "../../models/User";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -15,7 +16,8 @@ const Login: React.FC = () => {
   const signIn = async (): Promise<void> => {
     try {
       const response = await postLogin({ username, password });
-      authRepository.setLoggedUser(response.data);
+      const data: BaseUser = { ...response.data, roles: "ADMIN" };
+      authRepository.setLoggedUser(data);
       router.replace("/home");
     } catch (err: any) {
       if (err.response.status === 401) {

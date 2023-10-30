@@ -18,7 +18,7 @@ const getHeaders = (): any => {
   return headers;
 };
 
-export const logoutUser = (): void => {
+export const userLogout = (): void => {
   alert("Sessão expirada, faça login novamente.");
   authRepository.removeLoggedUser();
 };

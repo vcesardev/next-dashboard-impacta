@@ -9,7 +9,7 @@ const getHeaders = (): any => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-
+  console.log(user.token);
   const headers = {
     Authorization: `Bearer ${user?.token}`,
     "Content-Type": "application/json",
@@ -24,15 +24,22 @@ export const getRoles = (): Promise<APIResponse<BaseRole[]>> =>
     headers: getHeaders(),
   });
 
+export const getRole = (roleId: string): Promise<APIResponse<BaseRole>> =>
+  get({
+    url: `/roles/${roleId}`,
+    headers: getHeaders(),
+  });
+
 export const addRole = (
   data: RoleCreatePayload
 ): Promise<APIResponse<BaseRole>> =>
   post({ url: "/roles", headers: getHeaders(), data });
 
 export const editRole = (
-  data: RoleEditPayload
+  data: RoleEditPayload,
+  roleId: string
 ): Promise<APIResponse<BaseRole>> =>
-  put({ url: "/roles", headers: getHeaders(), data });
+  put({ url: `/roles/${roleId}`, headers: getHeaders(), data });
 
 export const deleteRole = (roleId: string): Promise<APIResponse<boolean>> =>
   del({ url: `/roles/${roleId}`, headers: getHeaders() });

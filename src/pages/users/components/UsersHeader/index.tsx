@@ -5,16 +5,22 @@ import BaseOptionButton from "../../../components/BaseOptionButton";
 
 type Props = {
   addNewUser: () => void;
+  goBack: () => void;
 };
 
-const UsersHeader: React.FC<Props> = ({ addNewUser }) => {
+const UsersHeader: React.FC<Props> = ({ addNewUser, goBack }) => {
   return (
     <>
       <Flex w={"80%"} align={"center"} justify={"space-between"}>
         <Box w={"30%"}>
-          {/* <Button bg={"blue.400"} size="sm" color={"white"} pt={"4"} pb={"4"}>
-      Roles
-    </Button> */}
+          <BaseOptionButton
+            onClick={goBack}
+            w={"100%"}
+            bg={"blackAlpha.400"}
+            _hover={{ bg: "blackAlpha.600" }}
+          >
+            Voltar
+          </BaseOptionButton>
         </Box>
 
         <HeaderText>Usuários cadastrados</HeaderText>

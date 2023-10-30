@@ -53,6 +53,10 @@ const Home: React.FC = () => {
     router.push("/users/add");
   };
 
+  const handleGoBack = (): void => {
+    router.push("/home");
+  };
+
   return (
     <Flex
       flexDirection={"column"}
@@ -72,7 +76,7 @@ const Home: React.FC = () => {
         direction={"column"}
         gap={5}
       >
-        <UsersHeader addNewUser={handleAddNewUser} />
+        <UsersHeader addNewUser={handleAddNewUser} goBack={handleGoBack} />
         {users?.map((user) => (
           <UserItem
             data={user}
